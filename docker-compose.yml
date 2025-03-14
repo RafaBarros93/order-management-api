@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:13 # Imagem do PostgreSQL
+    container_name: postgres_db # Nome do contêiner
+    environment:
+      POSTGRES_USER: user # Nome do usuário do banco de dados
+      POSTGRES_PASSWORD: 1234 # Senha do banco de dados
+      POSTGRES_DB: order_management # Nome do banco de dados
+    ports:
+      - "5432:5432" # Mapeia a porta 5432 do contêiner para a porta 5432 do host
+    volumes:
+      - postgres_data:/var/lib/postgresql/data # Persistência dos dados
+
+  pgadmin:
+    image: dpage/pgadmin4 # Imagem oficial do pgAdmin
+    container_name: pgadmin_container # Nome do contêiner
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@example.com # E-mail de login do pgAdmin
+      PGADMIN_DEFAULT_PASSWORD: admin # Senha de login do pgAdmin
+    ports:
+      - "5050:80" # Mapeia a porta 80 do contêiner para a porta 5050 do host
+    depends_on:
+      - db # Garante que o PostgreSQL seja iniciado antes do pgAdmin
+
+volumes:
+  postgres_data: # Volume para persistir os dados do banco
