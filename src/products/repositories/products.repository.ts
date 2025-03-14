@@ -1,4 +1,3 @@
-// src/products/products.repository.ts
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -26,9 +25,8 @@ export class ProductsRepository {
         return this.productRepository.save(newProduct);
     }
 
-    async update(id: number, product: UpdateProductDto): Promise<Product | null> {
+    async update(id: number, product: UpdateProductDto): Promise<void> {
         await this.productRepository.update(id, product);
-        return this.productRepository.findOne({ where: { id } });
     }
 
     async delete(id: number): Promise<void> {

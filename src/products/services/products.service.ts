@@ -1,5 +1,4 @@
-// src/products/products.service.ts
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { ProductsRepository } from '../repositories/products.repository';
 import { CreateProductDto } from '../dtos/create-product.dto';
 import { UpdateProductDto } from '../dtos/update-product.dto';
@@ -13,19 +12,33 @@ export class ProductsService {
         return this.productsRepository.findAll();
     }
 
-    async findOne(id: number): Promise<Product | null> {
-        return this.productsRepository.findOne(id);
+    async findOne(id: number): Promise<Product> {
+        const product = await this.productsRepository.findOne(id);
+        if (!product) {
+            throw new NotFoundException(`Produto com ID ${id} não encontrado.`);
+        }
+        return product;
     }
 
     async create(createProductDto: CreateProductDto): Promise<Product> {
         return this.productsRepository.create(createProductDto);
     }
 
-    async update(id: number, updateProductDto: UpdateProductDto): Promise<Product | null> {
-        return this.productsRepository.update(id, updateProductDto);
+    async update(id: number, updateProductDto: UpdateProductDto): Promise<Product> {
+        const existingProduct = await this.productsRepository.findOne(id);
+        if (!existingProduct) {
+            throw new NotFoundException(`Produto com ID ${id} não encontrado.`);
+        }
+
+        await this.productsRepository.update(id, updateProductDto);
+        return this.productsRepository.findOne(id) as Promise<Product>;
     }
 
     async delete(id: number): Promise<void> {
-        return this.productsRepository.delete(id);
+        const existingProduct = await this.productsRepository.findOne(id);
+        if (!existingProduct) {
+            throw new NotFoundException(`Produto com ID ${id} não encontrado.`);
+        }
+        await this.productsRepository.delete(id);
     }
 }
