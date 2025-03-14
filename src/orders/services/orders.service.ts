@@ -1,6 +1,7 @@
 // src/orders/orders.service.ts
 import { Injectable, BadRequestException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { Order } from '../entities/order.entity';
 import { Product } from '../../products/entities/product.entity';
 import { ProductsRepository } from 'src/products/repositories/products.repository';
@@ -12,7 +13,6 @@ import { OrdersRepository } from '../repositories/orders.repository';
 export class OrdersService {
     constructor(
         private readonly ordersRepository: OrdersRepository,
-        @InjectRepository(Product)
         private readonly productRepository: ProductsRepository,
     ) { }
 
