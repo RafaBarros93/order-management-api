@@ -1,10 +1,7 @@
-// src/orders/orders.service.ts
+
 import { Injectable, BadRequestException } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
 import { Order } from '../entities/order.entity';
-import { Product } from '../../products/entities/product.entity';
-import { ProductsRepository } from 'src/products/repositories/products.repository';
+import { ProductsRepository } from '../../products/repositories/products.repository';
 import { CreateOrderDto } from '../dtos/create-order.dto';
 import { OrderProduct } from '../entities/order-product.entity';
 import { OrdersRepository } from '../repositories/orders.repository';
@@ -79,7 +76,7 @@ export class OrdersService {
             // Atualiza o estoque do produto se o status for "Concluído"
             if (status === 'Concluído') {
                 item.product.quantidade_estoque -= item.quantity;
-                await this.productRepository.update(item.product.id, item.product);
+                await this.productRepository.update(item.product.id, { quantidade_estoque: item.product.quantidade_estoque });
             }
         }
 
