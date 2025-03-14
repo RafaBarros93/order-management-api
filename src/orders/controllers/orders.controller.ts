@@ -1,16 +1,10 @@
-import { Controller, Get, Post, Body, Param, Put } from '@nestjs/common';
+// src/orders/orders.controller.ts
+import { Controller, Get, Post, Body } from '@nestjs/common';
 import { OrdersService } from '../services/orders.service';
 import { CreateOrderDto } from '../dtos/create-order.dto';
-import { UpdateOrderDto } from '../dtos/update-order.dto';
-import {
-    ApiTags,
-    ApiOperation,
-    ApiResponse,
-    ApiBody,
-    ApiParam,
-} from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiResponse, ApiBody } from '@nestjs/swagger';
 
-@ApiTags('orders') // Tag para agrupar endpoints relacionados a pedidos
+@ApiTags('orders')
 @Controller('orders')
 export class OrdersController {
     constructor(private readonly ordersService: OrdersService) { }
@@ -22,34 +16,12 @@ export class OrdersController {
         return this.ordersService.findAll();
     }
 
-    @Get(':id')
-    @ApiOperation({ summary: 'Buscar um pedido por ID' })
-    @ApiParam({ name: 'id', description: 'ID do pedido', type: Number })
-    @ApiResponse({ status: 200, description: 'Pedido encontrado' })
-    @ApiResponse({ status: 404, description: 'Pedido não encontrado' })
-    async findOne(@Param('id') id: string) {
-        return this.ordersService.findOne(+id);
-    }
-
     @Post()
     @ApiOperation({ summary: 'Criar um novo pedido' })
-    @ApiBody({ type: CreateOrderDto }) // Tipo do corpo da requisição
+    @ApiBody({ type: CreateOrderDto })
     @ApiResponse({ status: 201, description: 'Pedido criado com sucesso' })
-    @ApiResponse({ status: 400, description: 'Dados inválidos' })
+    @ApiResponse({ status: 401, description: 'Id do pedido não encontrado' })
     async create(@Body() createOrderDto: CreateOrderDto) {
         return this.ordersService.create(createOrderDto);
-    }
-
-    @Put(':id')
-    @ApiOperation({ summary: 'Atualizar o status de um pedido' })
-    @ApiParam({ name: 'id', description: 'ID do pedido', type: Number })
-    @ApiBody({ type: UpdateOrderDto }) // Tipo do corpo da requisição
-    @ApiResponse({ status: 200, description: 'Pedido atualizado com sucesso' })
-    @ApiResponse({ status: 404, description: 'Pedido não encontrado' })
-    async update(
-        @Param('id') id: string,
-        @Body() updateOrderDto: UpdateOrderDto,
-    ) {
-        return this.ordersService.update(+id, updateOrderDto);
     }
 }

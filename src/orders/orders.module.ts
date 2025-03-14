@@ -1,19 +1,18 @@
 // src/orders/orders.module.ts
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { OrdersController } from './controllers/orders.controller';
-import { OrdersService } from './services/orders.service';
-import { OrdersRepository } from './repositories/orders.repository';
+import { OrdersController } from '../orders/controllers/orders.controller';
+import { OrdersService } from '../orders/services/orders.service';
+import { OrdersRepository } from '../orders/repositories/orders.repository';
 import { Order } from './entities/order.entity';
-import { ProductsModule } from '../products/products.module'; // Importa o ProductsModule
-import { Product } from '../products/entities/product.entity'; // Importa a entidade Product
+import { OrderProduct } from './entities/order-product.entity';
+import { Product } from '../products/entities/product.entity';
 
 @Module({
     imports: [
-        TypeOrmModule.forFeature([Order, Product]), // Registra as entidades Order e Product no TypeORM
-        ProductsModule, // Importa o ProductsModule para usar o ProductsService
+        TypeOrmModule.forFeature([Order, OrderProduct, Product]), // Registra as entidades no TypeORM
     ],
-    controllers: [OrdersController], // Controlador de pedidos
-    providers: [OrdersService, OrdersRepository], // Serviço e repositório de pedidos
+    controllers: [OrdersController],
+    providers: [OrdersService, OrdersRepository], // Fornece o OrdersService e OrdersRepository
 })
 export class OrdersModule { }

@@ -1,5 +1,13 @@
 // src/orders/entities/order.entity.ts
-import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, JoinTable } from 'typeorm';
+import {
+    Entity,
+    PrimaryGeneratedColumn,
+    Column,
+    OneToMany,
+    JoinTable,
+    ManyToMany,
+} from 'typeorm';
+import { OrderProduct } from './order-product.entity';
 import { Product } from '../../products/entities/product.entity';
 
 @Entity()
@@ -16,4 +24,7 @@ export class Order {
 
     @Column()
     status: string; // "Pendente", "Concluído" ou "Cancelado"
+
+    @OneToMany(() => OrderProduct, (orderProduct) => orderProduct.order)
+    orderProducts: OrderProduct[];
 }

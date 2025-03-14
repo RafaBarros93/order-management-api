@@ -3,36 +3,42 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Order } from '../entities/order.entity';
-import { Product } from '../../products/entities/product.entity';
-import { CreateOrderDto } from '../dtos/create-order.dto';
-import { UpdateOrderDto } from '../dtos/update-order.dto';
+import { OrderProduct } from '../entities/order-product.entity';
 
 @Injectable()
 export class OrdersRepository {
     constructor(
         @InjectRepository(Order)
         private readonly orderRepository: Repository<Order>,
-        @InjectRepository(Product)
-        private readonly productRepository: Repository<Product>,
+        @InjectRepository(OrderProduct)
+        private readonly orderProductRepository: Repository<OrderProduct>,
     ) { }
 
+    /**
+     * Lista todos os pedidos.
+     * @returns Lista de pedidos com seus produtos e quantidades.
+     */
     async findAll(): Promise<Order[]> {
-        return this.orderRepository.find({ relations: ['produtos'] });
+        return this.orderRepository.find({
+            relations: ['orderProducts', 'orderProducts.product'],
+        });
     }
 
-    async findOne(id: number): Promise<Order | null> {
-        return this.orderRepository.findOne({ where: { id }, relations: ['produtos'] });
+    /**
+     * Salva um novo pedido no banco de dados.
+     * @param order Pedido a ser salvo.
+     * @returns O pedido salvo.
+     */
+    async save(order: Order): Promise<Order> {
+        return this.orderRepository.save(order);
     }
 
-    async create(createOrderDto: CreateOrderDto): Promise<Order> {
-        const produtos = await this.productRepository.findByIds(createOrderDto.produtos);
-        const total_pedido = produtos.reduce((acc, product) => acc + product.preco, 0);
-        const newOrder = this.orderRepository.create({ produtos, total_pedido, status: createOrderDto.status });
-        return this.orderRepository.save(newOrder);
-    }
-
-    async update(id: number, updateOrderDto: UpdateOrderDto): Promise<Order | null> {
-        await this.orderRepository.update(id, updateOrderDto);
-        return this.orderRepository.findOne({ where: { id }, relations: ['produtos'] });
+    /**
+     * Salva uma associação entre pedido e produto.
+     * @param orderProduct Associação a ser salva.
+     * @returns A associação salva.
+     */
+    async saveOrderProduct(orderProduct: OrderProduct): Promise<OrderProduct> {
+        return this.orderProductRepository.save(orderProduct);
     }
 }
