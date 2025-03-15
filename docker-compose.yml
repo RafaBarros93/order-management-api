@@ -1,28 +1,64 @@
-version: '3.8'
-
 services:
   db:
-    image: postgres:13 # Imagem do PostgreSQL
-    container_name: postgres_db # Nome do contêiner
+    image: postgres:13
+    container_name: postgres_db
     environment:
-      POSTGRES_USER: user # Nome do usuário do banco de dados
-      POSTGRES_PASSWORD: 1234 # Senha do banco de dados
-      POSTGRES_DB: order_management # Nome do banco de dados
+      POSTGRES_USER: ${DATABASE_USER:-user}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD:-1234}
+      POSTGRES_DB: ${DATABASE_NAME:-order_management}
     ports:
-      - "5432:5432" # Mapeia a porta 5432 do contêiner para a porta 5432 do host
+      - "5432:5432"
     volumes:
-      - postgres_data:/var/lib/postgresql/data # Persistência dos dados
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - app_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DATABASE_USER} -d ${DATABASE_NAME}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
   pgadmin:
-    image: dpage/pgadmin4 # Imagem oficial do pgAdmin
-    container_name: pgadmin_container # Nome do contêiner
+    image: dpage/pgadmin4
+    container_name: pgadmin_container
     environment:
-      PGADMIN_DEFAULT_EMAIL: admin@example.com # E-mail de login do pgAdmin
-      PGADMIN_DEFAULT_PASSWORD: admin # Senha de login do pgAdmin
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-admin@example.com}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin}
     ports:
-      - "5050:80" # Mapeia a porta 80 do contêiner para a porta 5050 do host
+      - "5050:80"
     depends_on:
-      - db # Garante que o PostgreSQL seja iniciado antes do pgAdmin
+      - db
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    networks:
+      - app_network
+
+  app:
+    build: .
+    container_name: nestjs_app
+    ports:
+      - "${APP_PORT:-3000}:${APP_PORT:-3000}"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_HOST: ${DATABASE_HOST:-db}
+      DATABASE_PORT: ${DATABASE_PORT:-5432}
+      DATABASE_USER: ${DATABASE_USER:-user}
+      DATABASE_PASSWORD: ${DATABASE_PASSWORD:-1234}
+      DATABASE_NAME: ${DATABASE_NAME:-order_management}
+      NODE_ENV: ${NODE_ENV:-development}
+    networks:
+      - app_network
+    command: ["npm", "run", "start:dev"]
 
 volumes:
-  postgres_data: # Volume para persistir os dados do banco
+  postgres_data:
+  pgadmin_data:
+
+networks:
+  app_network:
+    driver: bridge
