@@ -70,12 +70,16 @@ Criar um contêiner para a aplicação NestJS.
 
 ### 4. Acesse a Aplicação
 
-```bash
-API NestJS: Disponível em http://localhost:3000.
-```
+API NestJS: Disponível
 
 ```bash
-PgAdmin: Disponível em http://localhost:5050. Use as credenciais definidas no .env para fazer login.
+  http://localhost:3000.
+```
+
+PgAdmin: Use as credenciais definidas no .env para fazer login.
+
+```bash
+  http://localhost:5050.
 ```
 
 📚 Endpoints da API
@@ -104,3 +108,45 @@ PUT /orders/:id: Atualiza um pedido existente.
 
 DELETE /orders/:id: Exclui um pedido.
 ```
+
+🐳 Estrutura do Docker Compose
+O docker-compose.yml define três serviços:
+
+db: Contêiner do PostgreSQL.
+
+pgadmin: Contêiner do PgAdmin para gerenciamento do banco de dados.
+
+app: Contêiner da aplicação NestJS.
+
+### 🧪 Testes
+
+Para executar os testes da aplicação, use o seguinte comando:
+
+```bash
+docker exec -it nestjs_app npm run test
+```
+
+🛑 Como Parar a Aplicação
+
+Para parar e remover os contêineres, execute:
+
+```bash
+docker-compose down
+```
+
+📄 Licença
+Este projeto está licenciado sob a licença MIT. Veja o arquivo LICENSE para mais detalhes.
+
+🙋‍♂️ Autor
+Seu Nome
+
+GitHub: RafaBarros93
+
+Email: rafabarros96@gmail.com
+
+🔗 Links Úteis
+
+- [Documentação do NestJS](https://docs.nestjs.com/)
+- [Documentação do TypeORM](https://typeorm.io/)
+- [Documentação do Docker](https://docs.docker.com/)
+- [Documentação do PgAdmin](https://www.pgadmin.org/docs/)
