@@ -11,7 +11,6 @@ A Order Management API é uma aplicação backend desenvolvida em **NestJS** par
 - **TypeORM**: ORM (Object-Relational Mapping) para interação com o banco de dados.
 - **Docker**: Para conteinerização da aplicação e banco de dados.
 - **Docker Compose**: Para orquestração dos contêineres.
-- **Joi**: Para validação de variáveis de ambiente.
 - **PgAdmin**: Interface gráfica para gerenciamento do banco de dados PostgreSQL.
 
 ---
@@ -82,7 +81,8 @@ PgAdmin: Use as credenciais definidas no .env para fazer login.
   http://localhost:5050.
 ```
 
-📚 Endpoints da API
+### 📚 Endpoints da API
+
 A API oferece os seguintes endpoints:
 
 ```bash
@@ -109,7 +109,8 @@ PUT /orders/:id: Atualiza um pedido existente.
 DELETE /orders/:id: Exclui um pedido.
 ```
 
-🐳 Estrutura do Docker Compose
+### 🐳 Estrutura do Docker Compose
+
 O docker-compose.yml define três serviços:
 
 db: Contêiner do PostgreSQL.
@@ -126,7 +127,7 @@ Para executar os testes da aplicação, use o seguinte comando:
 docker exec -it nestjs_app npm run test
 ```
 
-🛑 Como Parar a Aplicação
+### 🛑 Como Parar a Aplicação
 
 Para parar e remover os contêineres, execute:
 
@@ -134,17 +135,19 @@ Para parar e remover os contêineres, execute:
 docker-compose down
 ```
 
-📄 Licença
+### 📄 Licença
+
 Este projeto está licenciado sob a licença MIT. Veja o arquivo LICENSE para mais detalhes.
 
-🙋‍♂️ Autor
-Seu Nome
+### 🙋‍♂️ Autor
+
+Seu Nome Rafael Lopes Fonseca
 
 GitHub: RafaBarros93
 
 Email: rafabarros96@gmail.com
 
-🔗 Links Úteis
+### 🔗 Links Úteis
 
 - [Documentação do NestJS](https://docs.nestjs.com/)
 - [Documentação do TypeORM](https://typeorm.io/)
