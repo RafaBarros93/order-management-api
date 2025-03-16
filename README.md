@@ -1,98 +1,106 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Order Management API
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+A Order Management API é uma aplicação backend desenvolvida em **NestJS** para gerenciar pedidos e produtos. Ela oferece endpoints RESTful para criar, ler, atualizar e excluir (CRUD) produtos e pedidos, além de integrar-se com um banco de dados PostgreSQL para persistência de dados.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+---
 
-## Description
+## 🚀 Tecnologias Utilizadas
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+- **NestJS**: Framework Node.js para construção de aplicações server-side escaláveis e eficientes.
+- **PostgreSQL**: Banco de dados relacional para armazenamento de dados.
+- **TypeORM**: ORM (Object-Relational Mapping) para interação com o banco de dados.
+- **Docker**: Para conteinerização da aplicação e banco de dados.
+- **Docker Compose**: Para orquestração dos contêineres.
+- **Joi**: Para validação de variáveis de ambiente.
+- **PgAdmin**: Interface gráfica para gerenciamento do banco de dados PostgreSQL.
 
-## Project setup
+---
 
-```bash
-$ yarn install
-```
+## 📋 Requisitos
 
-## Compile and run the project
+Antes de executar a aplicação, certifique-se de ter instalado:
+
+- [Node.js](https://nodejs.org/) (versão 16 ou superior)
+- [Docker](https://www.docker.com/)
+- [Docker Compose](https://docs.docker.com/compose/)
+
+---
+
+## 🛠️ Como Executar a Aplicação
+
+### 1. Clone o Repositório
 
 ```bash
-# development
-$ yarn run start
-
-# watch mode
-$ yarn run start:dev
-
-# production mode
-$ yarn run start:prod
+git clone https://github.com/seu-usuario/order-management-api.git
+cd order-management-api
 ```
 
-## Run tests
+### 2. Configure as Variáveis de Ambiente
 
 ```bash
-# unit tests
-$ yarn run test
+# Banco de Dados
+DATABASE_HOST=db
+DATABASE_PORT=5432
+DATABASE_USER=user
+DATABASE_PASSWORD=1234
+DATABASE_NAME=order_management
 
-# e2e tests
-$ yarn run test:e2e
+# PgAdmin
+PGADMIN_DEFAULT_EMAIL=admin@example.com
+PGADMIN_DEFAULT_PASSWORD=admin
 
-# test coverage
-$ yarn run test:cov
+# Aplicativo NestJS
+APP_PORT=3000
+NODE_ENV=development
 ```
 
-## Deployment
-
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+### 3. Inicie os Contêineres com Docker Compose
 
 ```bash
-$ yarn install -g mau
-$ mau deploy
+docker-compose up -d
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+Isso irá:
 
-## Resources
+Criar um contêiner para o banco de dados PostgreSQL.
 
-Check out a few resources that may come in handy when working with NestJS:
+Criar um contêiner para o PgAdmin (interface gráfica para o banco de dados).
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+Criar um contêiner para a aplicação NestJS.
 
-## Support
+### 4. Acesse a Aplicação
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+```bash
+API NestJS: Disponível em http://localhost:3000.
+```
 
-## Stay in touch
+```bash
+PgAdmin: Disponível em http://localhost:5050. Use as credenciais definidas no .env para fazer login.
+```
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+📚 Endpoints da API
+A API oferece os seguintes endpoints:
 
-## License
+```bash
+Produtos
+GET /products: Lista todos os produtos.
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+GET /products/:id: Retorna um produto específico pelo ID.
+
+POST /products: Cria um novo produto.
+
+PUT /products/:id: Atualiza um produto existente.
+
+DELETE /products/:id: Exclui um produto.
+
+Pedidos
+GET /orders: Lista todos os pedidos.
+
+GET /orders/:id: Retorna um pedido específico pelo ID.
+
+POST /orders: Cria um novo pedido.
+
+PUT /orders/:id: Atualiza um pedido existente.
+
+DELETE /orders/:id: Exclui um pedido.
+```
