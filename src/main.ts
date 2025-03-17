@@ -10,8 +10,11 @@ async function bootstrap() {
     .setTitle('Order Management API') // Título da API
     .setDescription('API para gerenciamento de pedidos e produtos') // Descrição
     .setVersion('1.0') // Versão da API
-    .addTag('products') // Tag para agrupar endpoints relacionados
-    .addTag('orders') // Tag para agrupar endpoints relacionados
+    .addBearerAuth({
+      type: 'http',
+      scheme: 'bearer',
+      bearerFormat: 'JWT',
+    }, 'access-token') // Definição do nome do token
     .build();
 
   const document = SwaggerModule.createDocument(app, config);

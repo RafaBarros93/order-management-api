@@ -4,6 +4,9 @@ import { LoggingMiddleware } from './middleware/logging.middleware';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ProductsModule } from './products/products.module';
 import { OrdersModule } from './orders/orders.module';
+import { AuthModule } from './auth/auth.module';
+import { UsersModule } from './users/users.module';
+
 
 @Module({
   imports: [
@@ -25,8 +28,11 @@ import { OrdersModule } from './orders/orders.module';
         synchronize: configService.get<string>('NODE_ENV') === 'development',
       }),
     }),
+    AuthModule,
+    UsersModule,
     ProductsModule,
     OrdersModule,
+
   ],
 })
 export class AppModule implements NestModule {

@@ -86,7 +86,15 @@ PgAdmin: Use as credenciais definidas no .env para fazer login.
 A API oferece os seguintes endpoints:
 
 ```bash
+Auth
+
+POST /auth/login Fazer Login
+
+Users
+POST /auth/login Cadastra um novo usuário
+
 Produtos
+
 GET /products: Lista todos os produtos.
 
 GET /products/:id: Retorna um produto específico pelo ID.
@@ -107,6 +115,9 @@ POST /orders: Cria um novo pedido.
 PUT /orders/:id: Atualiza um pedido existente.
 
 DELETE /orders/:id: Exclui um pedido.
+
+
+
 ```
 
 ### 🐳 Estrutura do Docker Compose
