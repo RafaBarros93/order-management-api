@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { ConflictException, Injectable } from '@nestjs/common';
 import { UsersRepository } from '../repositories/users.repository';
 import * as bcrypt from 'bcryptjs';
 import { CreateUserDto } from '../dtos/create-user.dto';
@@ -11,6 +11,12 @@ export class UsersService {
     async create(createUserDto: CreateUserDto): Promise<User> {
         const { username, password } = createUserDto;
         const hashedPassword = await bcrypt.hash(password, 10); // Criptografa a senha
+
+        const userExists = await this.findOne(username);
+
+        if (userExists)
+            throw new ConflictException(`Usuário Já Cadastrado.`);
+
         return this.usersRepository.create(username, hashedPassword);
     }
 
