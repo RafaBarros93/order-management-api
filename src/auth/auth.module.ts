@@ -11,8 +11,8 @@ import { UsersModule } from '../users/users.module';
   imports: [
     PassportModule.register({ defaultStrategy: 'jwt' }),
     JwtModule.register({
-      secret: 'sua_chave_secreta_jwt', // Use uma chave secreta forte em produção
-      signOptions: { expiresIn: '1h' }, // Token expira em 1 hora
+      secret: 'sua_chave_secreta_jwt',
+      signOptions: { expiresIn: '1h' },
     }),
     UsersModule
   ],

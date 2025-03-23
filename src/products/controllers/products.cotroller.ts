@@ -14,15 +14,15 @@ export class ProductsController {
     constructor(private readonly productsService: ProductsService) { }
 
     @Get()
-    @ApiOperation({ summary: 'Listar todos os produtos' }) // Descrição da operação
-    @ApiResponse({ status: 200, description: 'Produtos listados com sucesso' }) // Resposta esperada
+    @ApiOperation({ summary: 'Listar todos os produtos' })
+    @ApiResponse({ status: 200, description: 'Produtos listados com sucesso' })
     async findAll() {
         return this.productsService.findAll();
     }
 
     @Get(':id')
     @ApiOperation({ summary: 'Buscar um produto por ID' })
-    @ApiParam({ name: 'id', description: 'ID do produto' }) // Parâmetro da rota
+    @ApiParam({ name: 'id', description: 'ID do produto' })
     @ApiResponse({ status: 200, description: 'Produto encontrado' })
     @ApiResponse({ status: 404, description: 'Produto não encontrado' })
     async findOne(@Param('id') id: string) {
@@ -31,7 +31,7 @@ export class ProductsController {
 
     @Post()
     @ApiOperation({ summary: 'Criar um novo produto' })
-    @ApiBody({ type: CreateProductDto }) // Tipo do corpo da requisição
+    @ApiBody({ type: CreateProductDto })
     @ApiResponse({ status: 201, description: 'Produto criado com sucesso' })
     async create(@Body() createProductDto: CreateProductDto) {
         return this.productsService.create(createProductDto);

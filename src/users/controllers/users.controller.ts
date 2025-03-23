@@ -9,10 +9,10 @@ export class UsersController {
     constructor(private readonly usersService: UsersService) { }
 
     @Post('register')
-    @ApiOperation({ summary: 'Cadastrar um novo usuário' }) // Descrição da operação
-    @ApiResponse({ status: 201, description: 'Usuário cadastrado com sucesso' }) // Resposta esperada
-    @ApiResponse({ status: 400, description: 'Dados inválidos' }) // Resposta de erro
-    @ApiResponse({ status: 409, description: 'Usuário Já Cadastrado.' }) // Resposta de erro
+    @ApiOperation({ summary: 'Cadastrar um novo usuário' })
+    @ApiResponse({ status: 201, description: 'Usuário cadastrado com sucesso' })
+    @ApiResponse({ status: 400, description: 'Dados inválidos' })
+    @ApiResponse({ status: 409, description: 'Usuário Já Cadastrado.' })
     async register(@Body() createUserDto: CreateUserDto) {
         return this.usersService.create(createUserDto);
     }

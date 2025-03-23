@@ -11,8 +11,8 @@ export class AuthController {
 
     @UseGuards(LocalStrategy)
     @Post('login')
-    @ApiOperation({ summary: 'Fazer login' }) // Descrição do endpoint
-    @ApiBody({ type: LoginDto }) // Define o corpo da requisição
+    @ApiOperation({ summary: 'Fazer login' })
+    @ApiBody({ type: LoginDto })
     @ApiResponse({ status: 200, description: 'Login realizado com sucesso' })
     @ApiResponse({ status: 401, description: 'Credenciais inválidas' })
     @Post('login')

@@ -10,7 +10,7 @@ export class UsersService {
 
     async create(createUserDto: CreateUserDto): Promise<User> {
         const { username, password } = createUserDto;
-        const hashedPassword = await bcrypt.hash(password, 10); // Criptografa a senha
+        const hashedPassword = await bcrypt.hash(password, 10);
 
         const userExists = await this.findOne(username);
 
